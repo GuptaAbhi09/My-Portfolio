@@ -1,26 +1,174 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --navy: #050d1a;
+  --navy2: #0a1628;
+  --navy3: #0f2040;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --accent3: #34d399;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --font-syne: var(--font-syne);
+  --font-manrope: var(--font-manrope);
+  --font-dm-mono: var(--font-dm-mono);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  font-family: var(--font-manrope), sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.75;
+  font-size: 16px;
+}
+
+/* Living Background System */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: 
+    radial-gradient(ellipse 70% 50% at 15% 20%, rgba(56, 189, 248, 0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 85% 75%, rgba(129, 140, 248, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 50% 100%, rgba(52, 211, 153, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Subtle Dot Grid */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-syne);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: white;
+}
+
+p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.section-main {
+  padding: 120px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Section Spacing Utilities */
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-eyebrow {
+  font-family: var(--font-dm-mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+  font-weight: 500;
+}
+
+.section-title-large {
+  font-family: var(--font-syne);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 48px;
+  letter-spacing: -0.04em;
+}
+
+.content-center { text-align: center; }
+
+/* Grid Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .section-main { padding: 80px 0; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .section-title-large { margin-bottom: 32px; }
+}
+
+/* Shared UI Components */
+.badge-tech {
+  font-family: var(--font-dm-mono);
+  font-size: 11px;
+  background: var(--glass);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+}
+
+.tag-skill {
+  font-family: var(--font-manrope);
+  font-size: 13px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.tag-skill:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Footer Section */
+.footer-container {
+  border-top: 1px solid var(--glass-border);
+  padding: 80px 20px;
+  text-align: center;
+  font-family: var(--font-dm-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+@media (hover: none) {
+  .cursor-glow {
+    display: none !important;
+  }
 }
