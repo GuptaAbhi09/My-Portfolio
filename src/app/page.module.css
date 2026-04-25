@@ -302,81 +302,175 @@
   font-size: 20px;
 }
 
-/* Contact */
-.contactGrid {
+/* Redesigned Contact Section */
+.contactTwoCol {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 900px;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: flex-start;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
-.contactCardLink {
-  text-decoration: none;
-  display: block;
+.contactLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.contactCard {
-  display: flex !important;
+.contactHeading {
+  font-family: var(--font-syne);
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: white;
+  line-height: 1.1;
+}
+
+.contactSubtext {
+  font-size: 17px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.contactRows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.contactRow, .contactRowLink {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: #e2e8f0;
+}
+
+.contactRowIcon {
+  font-size: 20px;
+}
+
+.contactRowText {
+  font-size: 15px;
+  font-family: var(--font-manrope);
+}
+
+.contactRowLink:hover {
+  background: rgba(56, 189, 248, 0.08);
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.contactRow:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.contactRight {
+  position: relative;
+}
+
+.formCard {
+  padding: 32px !important;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
   flex-direction: column;
   gap: 8px;
-  text-align: left;
-  transition: all 0.3s ease !important;
 }
 
-.contactCardLink:hover .contactCard {
-  transform: translateY(-5px);
-  border-color: var(--accent);
-  background: rgba(56, 189, 248, 0.05);
-}
-
-.contactLabel {
-  font-family: var(--font-dm-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
   color: #94a3b8;
-}
-
-.contactIcon {
-  color: var(--accent);
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-.contactCardLink:hover .contactIcon {
-  opacity: 1;
-}
-
-.contactValue {
-  font-size: 15px;
-  font-weight: 500;
-  color: white;
-  margin: 4px 0;
-}
-
-.contactLink {
-  font-size: 12px;
-  color: var(--accent);
-  text-decoration: none;
-  margin-top: 8px;
   font-family: var(--font-dm-mono);
-  opacity: 0.6;
-  transition: opacity 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.contactCardLink:hover .contactLink {
-  opacity: 1;
+.formGroup input, .formGroup textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: white;
+  font-family: var(--font-manrope);
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.formGroup input:focus, .formGroup textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(56, 189, 248, 0.04);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+}
+
+.submitBtn {
+  background: var(--accent);
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-manrope);
+  margin-top: 10px;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+  background: #7dd3fc;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.successMsg {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  color: #34d399;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.errorMsg {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .contactDivider {
-  width: 60px;
-  height: 2px;
-  margin: 32px auto;
-  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  display: none; /* Removed as per redesign */
 }
 
-.footer { margin-top: 80px; text-align: center; }
+.footer { margin-top: 120px; text-align: center; }
 
 .socialRow {
   display: flex;
@@ -414,14 +508,15 @@
 }
 
 @media (max-width: 992px) {
-  .expHeader {
-    flex-direction: column;
-    align-items: flex-start;
+  .contactTwoCol {
+    grid-template-columns: 1fr;
+    gap: 48px;
   }
+  .contactHeading { font-size: 38px; }
 }
 
 @media (max-width: 768px) {
-  .skillsGrid, .contactGrid { grid-template-columns: 1fr; }
+  .skillsGrid { grid-template-columns: 1fr; }
   .experienceCardLarge { padding: 24px !important; }
   .companyName { font-size: 20px; }
   .jobRole { flex-direction: column; align-items: flex-start; gap: 4px; }

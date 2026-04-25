@@ -19,6 +19,12 @@ const Divider = () => (
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "pending" | "success" | "error">("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,36 +33,37 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  const contactData = [
-    {
-      label: "EMAIL",
-      value: "abhishek31052003@gmail.com",
-      href: "mailto:abhishek31052003@gmail.com",
-      icon: "✉️",
-      btnText: "Send Email →"
-    },
-    {
-      label: "PHONE",
-      value: "+91 89609 58353",
-      href: "tel:+918960958353",
-      icon: "📞",
-      btnText: "Call Now →"
-    },
-    {
-      label: "LINKEDIN",
-      value: "Abhishek Gupta",
-      href: "https://www.linkedin.com/in/abhishek-gupta-953589253",
-      icon: "🔗",
-      btnText: "Visit Profile →"
-    },
-    {
-      label: "GITHUB",
-      value: "GuptaAbhi09",
-      href: "https://github.com/GuptaAbhi09",
-      icon: "🐙",
-      btnText: "View Repos →"
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("pending");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "735e678d-8f9d-4759-8f50-4d568267cc87",
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setStatus("error");
     }
-  ];
+  };
 
   if (!isMounted) return null;
 
@@ -92,8 +99,7 @@ export default function Home() {
             
             <div className={styles.periodBadgeLarge}>
               <span style={{ fontSize: '14px' }}>📅</span>
-              <span>Sep 2024 – Present</span>
-              <span className={styles.durationTag}>· 8 mos</span>
+              <span>Sep 2025 – Present</span>
             </div>
           </div>
           
@@ -101,20 +107,20 @@ export default function Home() {
             <ul className={styles.premiumList}>
               <li>
                 <div className={styles.listBullet}></div>
-                <p>Built and deployed <strong>3 production-grade</strong> Next.js applications for international clients, optimizing performance through Server Components and advanced caching strategies.</p>
+                <p>Built and deployed <strong>DesiAcres</strong> — a full-stack real estate app live on the Play Store (Expo), along with its dynamic marketing website and admin panel, all developed end-to-end.</p>
               </li>
               <li>
                 <div className={styles.listBullet}></div>
-                <p>Architected and launched cross-platform mobile apps using <strong>Expo & React Native</strong>, successfully managing internal testing tracks and binary deployments.</p>
+                <p>Developed a <strong>personal client dashboard</strong> with data management, custom views, and secure backend integration using Supabase and PostgreSQL.</p>
               </li>
               <li>
                 <div className={styles.listBullet}></div>
-                <p>Established robust <strong>Backend-as-a-Service</strong> workflows with Supabase, implementing real-time data sync, RLS policies, and secure multi-provider authentication.</p>
+                <p>Currently building <strong>ConnectHub</strong>, a networking and collaboration app (Expo), independently handling architecture, UI, and backend.</p>
               </li>
             </ul>
 
             <div className={styles.skillCloud}>
-              {["Next.js", "React Native", "TypeScript", "Supabase", "PostgreSQL", "Expo"].map(s => (
+              {["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Expo"].map(s => (
                 <span key={s} className={styles.expMiniTag}>{s}</span>
               ))}
             </div>
@@ -170,12 +176,12 @@ export default function Home() {
               🛒 Live · E-commerce
             </div>
             <h3 className={styles.projectTitle}>TechHaven</h3>
-            <p style={{ marginBottom: '20px' }}>Modern e-commerce platform with a focus on high-performance search and smooth UX.</p>
+            <p style={{ marginBottom: '20px' }}>Full-stack e-commerce platform with dynamic product filtering, shopping cart system, and secure user authentication.</p>
             <div className={styles.stackRow}>
-              <span className={styles.stackBadge}>React</span>
-              <span className={styles.stackBadge}>Node.js</span>
-              <span className={styles.stackBadge}>MongoDB</span>
-              <span className={styles.stackBadge}>Redux</span>
+              <span className={styles.stackBadge}>React.js</span>
+              <span className={styles.stackBadge}>Supabase</span>
+              <span className={styles.stackBadge}>PostgreSQL</span>
+              <span className={styles.stackBadge}>Tailwind CSS</span>
             </div>
             <div className={styles.projectLinks}>
               <a href="https://ecommerce-website-react-chi.vercel.app/" target="_blank" className={styles.demoBtn}>Live Demo</a>
@@ -196,11 +202,10 @@ export default function Home() {
         <div className={styles.skillsGrid}>
           {[
             { cat: "Languages", items: ["C++", "JavaScript", "TypeScript", "SQL"] },
-            { cat: "Frontend", items: ["React.js", "Next.js", "Tailwind CSS", "Expo", "HTML", "CSS"] },
-            { cat: "Backend", items: ["Supabase", "PostgreSQL", "Express.js", "MongoDB", "REST"] },
+            { cat: "Frontend", items: ["React.js", "Next.js", "Tailwind CSS", "HTML", "CSS", "Expo"] },
+            { cat: "Backend", items: ["Supabase", "PostgreSQL", "Express.js", "MongoDB", "REST APIs"] },
             { cat: "Tools", items: ["Git", "Postman", "Figma", "Vercel"] },
-            { cat: "State", items: ["Zustand", "Zod", "RBAC", "RLS"] },
-            { cat: "Concepts", items: ["DSA", "OOP", "DBMS", "OS", "Networks"] }
+            { cat: "Concepts", items: ["DSA", "OOP", "DBMS", "Operating Systems", "Computer Networks"] }
           ].map((skill, j) => (
             <GlassCard key={j} className={styles.skillCard}>
               <h4 className={styles.skillCardTitle}>{skill.cat}</h4>
@@ -293,34 +298,98 @@ export default function Home() {
         title="" 
         eyebrow="// 06 — Contact"
       >
-        <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto 48px' }}>
-          <p>I&apos;m currently looking for new opportunities. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!</p>
-          <div className={styles.contactDivider}></div>
-        </div>
+        <div className={styles.contactTwoCol}>
+          <div className={styles.contactLeft}>
+            <h2 className={styles.contactHeading}>Let&apos;s Work Together</h2>
+            <p className={styles.contactSubtext}>
+              I&apos;m currently open to Full Stack and SDE opportunities. Feel free to reach out — I usually respond within 24 hours.
+            </p>
+            
+            <div className={styles.contactRows}>
+              <div className={styles.contactRow}>
+                <span className={styles.contactRowIcon}>📧</span>
+                <span className={styles.contactRowText}>abhishek31052003@gmail.com</span>
+              </div>
+              <div className={styles.contactRow}>
+                <span className={styles.contactRowIcon}>📞</span>
+                <span className={styles.contactRowText}>+91 8960958353</span>
+              </div>
+              <a href="https://www.linkedin.com/in/abhishek-gupta-953589253" target="_blank" className={styles.contactRowLink}>
+                <span className={styles.contactRowIcon}>🔗</span>
+                <span className={styles.contactRowText}>LinkedIn →</span>
+              </a>
+              <a href="https://github.com/GuptaAbhi09" target="_blank" className={styles.contactRowLink}>
+                <span className={styles.contactRowIcon}>🐙</span>
+                <span className={styles.contactRowText}>GitHub →</span>
+              </a>
+            </div>
+          </div>
 
-        <div className={styles.contactGrid}>
-          {contactData.map((contact, i) => (
-            <a 
-              key={i} 
-              href={contact.href} 
-              target={contact.href.startsWith('http') ? "_blank" : undefined}
-              className={styles.contactCardLink}
-            >
-              <GlassCard className={styles.contactCard}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <span className={styles.contactLabel}>{contact.label}</span>
-                  <div className={styles.contactIcon} style={{ fontSize: '20px' }}>{contact.icon}</div>
+          <div className={styles.contactRight}>
+            <GlassCard className={styles.formCard}>
+              <form className={styles.contactForm} onSubmit={handleSubmit}>
+                <input type="hidden" name="access_key" value="735e678d-8f9d-4759-8f50-4d568267cc87" />
+                
+                <div className={styles.formGroup}>
+                  <label htmlFor="name">Name</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    placeholder="Your Name" 
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
                 </div>
-                <span className={styles.contactValue}>{contact.value}</span>
-                <span className={styles.contactLink}>{contact.btnText}</span>
-              </GlassCard>
-            </a>
-          ))}
+                <div className={styles.formGroup}>
+                  <label htmlFor="email">Email</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="your@email.com" 
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="message">Message</label>
+                  <textarea 
+                    id="message" 
+                    rows={4} 
+                    placeholder="Your Message" 
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  ></textarea>
+                </div>
+                
+                <button 
+                  type="submit" 
+                  className={styles.submitBtn}
+                  disabled={status === "pending"}
+                >
+                  {status === "pending" ? "Sending..." : "Send Message"}
+                </button>
+
+                {status === "success" && (
+                  <div className={styles.successMsg}>
+                    Thanks for reaching out! I&apos;ll get back to you within 24 hours.
+                  </div>
+                )}
+                {status === "error" && (
+                  <div className={styles.errorMsg}>
+                    Something went wrong. Please try emailing me directly at abhishek31052003@gmail.com
+                  </div>
+                )}
+              </form>
+            </GlassCard>
+          </div>
         </div>
 
         <footer className={styles.footer}>
           <div className={styles.socialRow}>
-            {['GH', 'IN', 'LC', 'GF'].map((s, i) => (
+            {['LC', 'GF'].map((s, i) => (
               <div key={i} className={styles.socialCircle}>{s}</div>
             ))}
           </div>
